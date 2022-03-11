@@ -1,3 +1,27 @@
+<?php
+require_once("../libs/functions.php");
+
+try {
+    $pdo = new_PDO();
+
+    $sql = "select
+                co.id,
+                co.title course_title,
+                ca.title category_title
+            from
+                courses co
+                inner join categories ca on co.category_id = ca.id
+            order by
+                co.id";
+    $st = $pdo->query($sql);
+    $courses = $st->fetchAll();
+    var_dump($courses);
+} catch (PDOException $e) {
+    error_log($e->getMessage());
+    header("Location: error.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -35,50 +59,19 @@
             </div>
         </div>
         <div class="row">
+            <?php foreach($courses as $course): ?>
             <div class="col-md-3">
                 <div class="card mb-4 shadow-sm">
-                    <img src="img/courses/1.png" alt="course image">
+                    <img src="img/courses/<?= h($course['id']) ?>.png" alt="course image">
                     <div class="card-body">
-                        <h5 class="card-title">PHP Basic</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Programming</h6>
-                        <a href="detail.php?course_id=1" 
+                        <h5 class="card-title"><?= h($course['course_title']) ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><?= h($course['category_title']) ?></h6>
+                        <a href="detail.php?course_id=<?= h($course['id']) ?>"
                             class="btn btn-sm btn-outline-secondary">View</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <img src="img/courses/2.png" alt="course image">
-                    <div class="card-body">
-                        <h5 class="card-title">PHP Database</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Programming</h6>
-                        <a href="detail.php?course_id=2" 
-                            class="btn btn-sm btn-outline-secondary">View</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <img src="img/courses/3.png" alt="course image">
-                    <div class="card-body">
-                        <h5 class="card-title">Python Basic</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Programming</h6>
-                        <a href="detail.php?course_id=3" 
-                            class="btn btn-sm btn-outline-secondary">View</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <img src="img/courses/4.png" alt="course image">
-                    <div class="card-body">
-                        <h5 class="card-title">Web Design</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Design</h6>
-                        <a href="detail.php?course_id=4" 
-                            class="btn btn-sm btn-outline-secondary">View</a>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </main>
     <footer class="footer bg-secondary text-white">
