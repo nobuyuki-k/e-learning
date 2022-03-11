@@ -1,3 +1,6 @@
+<?php
+require_once("../libs/functions.php");
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
