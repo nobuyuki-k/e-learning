@@ -15,7 +15,7 @@ try {
                 co.id";
     $st = $pdo->query($sql);
     $courses = $st->fetchAll();
-    var_dump($courses);
+    // var_dump($courses);
 } catch (PDOException $e) {
     error_log($e->getMessage());
     header("Location: error.php");
