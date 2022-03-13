@@ -55,6 +55,11 @@ try {
         }
     }
 
+    if (is_sign_in())
+    {
+        $csrf_token = generate_csrf_token();
+    }
+
     require("../views/detail_view.php");
 } catch (PDOException $e) {
     error_log($e->getMessage());
