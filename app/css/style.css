@@ -18,3 +18,7 @@ body {
 .section-video {
     max-width: 100%;
 }
+
+.section-finished {
+    text-decoration: line-through;
+}
