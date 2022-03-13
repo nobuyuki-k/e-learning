@@ -25,7 +25,8 @@
                     <ul class="list-group list-group-flush">
                         <?php foreach($sections as $section): ?>
                         <li class="list-group-item">
-                            <a href="detail.php?course_id=<?= h($course['id']) ?>&section_id=<?= h($section['id']) ?>">
+                            <a href="detail.php?course_id=<?= h($course['id']) ?>&section_id=<?= h($section['id']) ?>"
+                                class="<?= is_sign_in() && $section['created_at'] != null ? "section-finished" : "" ?>">
                                 Section <?= h($section['no']) ?> : <?= h($section['title']) ?>
                             </a>
                         </li>
@@ -46,7 +47,8 @@
                         <input type="hidden" name="csrf_token" value="<?= h($csrf_token) ?>">
                         <input type="hidden" name="course_id" value="<?= h($course['id']) ?>">
                         <input type="hidden" name="section_id" value="<?= h($current_section['id']) ?>">
-                        <button type="submit" class="btn btn-primary">Finish</button>
+                        <button type="submit" class="btn btn-primary"
+                            <?= $current_section['created_at'] != null ? 'disabled' : ''?>>Finish</button>
                     </form>
                 <?php endif; ?>
             </div>

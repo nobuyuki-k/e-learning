@@ -38,7 +38,13 @@ try {
     }
 
     $section_dao = new SectionDAO($pdo);
-    $sections = $section_dao->selectByCourseId($course_id);
+    $account_id = get_account_id();
+    if ($account_id !== false)
+    {
+        $sections = $section_dao->selectByCourseIdAndAccountId($course_id, $account_id);
+    } else {
+        $sections = $section_dao->selectByCourseId($course_id);
+    }
     if (count($sections) === 0) {
         error_log("Invalid sections." . $course_id);
         header("Location: error.php");
